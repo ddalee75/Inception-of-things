@@ -1,0 +1,68 @@
+BOX = "centos/8"
+MASTER_NAME = "chileeS"
+WORKER_NAME = "chileeSW"
+MASTER_IP = "192.168.42.110"
+WORKER_IP = "192.168.42.111"
+SHARED_LOCAL_PATH = "."
+SHARED_VM_PATH ="/shared"
+
+Vagrant.configure("2") do |config|
+    config.vm.box = BOX
+    config.ssh.forward_agent = true
+    config.vm.synced_folder SHARED_LOCAL_PATH, SHARED_VM_PATH, type: 'vitualbox'
+    config.vm.provision "shell", path: "scripts/firewalld_disable.sh"
+    config.vm.provision "shell", path: "scripts/k3s_install.sh"
+    config.vm.provision "shell", path: "scripts/ifconfig_install.sh"
+    config.vm.provision "shell", inline: <<-SHELL
+        mkdir -p /shared/confs
+    SHELL
+    
+    
+    config.vm.provider "virtualbox" do |vb|
+        vb.memory = "512"
+        vb.cpus = 1
+        vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+        vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+        vb.gui =true
+    end
+
+    config.vm.define MASTER_NAME do |master|
+        master.vm.hostname = MASTER_NAME
+        master.vm.network "private_network", ip: MASTER_IP, hostname: true
+        
+        master.vm.provider "virtualbox" do |vb|
+            vb.name = MASTER_NAME
+        end 
+       
+
+        master.vm.provision "up", type: "shell", run: "always", inline: <<-SHELL
+        nohup /usr/local/bin/k3s server --write-kubeconfig /shared/confs/kubeconfig --write-kubeconfig-mode 644 --node-name chileeS --flannel-iface eth1 >> /var/log/k3s-server.log 2>&1 & 
+        SHELL
+
+        master.vm.provision "shell", inline: <<-SHELL
+        NODE_TOKEN="/var/lib/rancher/k3s/server/node-token"
+        while [ ! -e ${NODE_TOKEN} ]
+        do
+        echo "Waiting for node token..."
+        sleep 1
+        done
+        cp ${NODE_TOKEN} /shared/confs/master1-token
+        SHELL
+
+        master.vm.provision "shell", path: "scripts/kubectl_install.sh"
+    end
+
+    config.vm.define WORKER_NAME do |worker|
+        worker.vm.hostname = WORKER_NAME
+        worker.vm.network "private_network", ip: WORKER_IP, hostname: true
+        
+        worker.vm.provider "vituralbox" do |vb|
+            vb.name = WORKER_NAME
+        end
+
+        worker.vm.provision "up", type: "shell", run: "always", inline: <<-SHELL
+        cp /shared/confs/master1-token ~/master1-token
+        nohup /usr/local/bin/k3s agent --server https://192.168.42.110:6443 --token-file ~/master1-token --node-name chileeSW --flannel-iface eth1 >> /var/log/k3s-agent.log 2>&1 & 
+        SHELL
+    end
+end
