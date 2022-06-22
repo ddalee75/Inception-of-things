@@ -1,6 +1,6 @@
-vagrantfile_ok_v1
+vagrantfile_ok_v1 (la verson avec les scripts dans le fichier vagrantfile)
 	la version qui fonctionne mais pas encore tester "kubectl get nodes -o wide" et pas encore installer ifconfig
 
-vagrantfile
+vagrantfile (la version avec les srcipts separes) 
 	ca monte les deux vm. et ifconfig installe. mais pas tester "kubectl get nodes -o wide" 
 
