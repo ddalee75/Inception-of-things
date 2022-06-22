@@ -1,52 +1,60 @@
 
 BOX = "generic/centos8"
 BOX_URL = "https://app.vagrantup.com/generic/boxes/centos8/versions/3.6.12/providers/virtualbox.box"
-BOX_AUTO_UPDATE = false
-$DISABLE_FIREWALL_SCRIPT = <<-SHELL
-  sudo systemctl disable --now firewalld.service
-SHELL
-
 
 MASTER_NAME = "chileeS"
 WORKER_NAME = "chileeSW"
 MASTER_IP = "192.168.42.110"
 WORKER_IP = "192.168.42.111"
-LOCAL_PATH = "."
-VM_PATH = "/vagrant"
 
 Vagrant.configure("2") do |config|
   config.vm.box = BOX
   config.vm.box_url = BOX_URL
-  config.vm.box_check_update = BOX_AUTO_UPDATE
+  config.vm.box_check_update = false
   config.vm.synced_folder ".", "/vagrant"
-    
+   
   config.vm.provider "virtualbox" do |vb| 
-    vb.memory = "1024"
+    vb.memory = "512"
     vb.cpus = 1
     vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
     vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
     #vb.gui = true
-    
   end
 
   config.vm.define MASTER_NAME do |master|
     master.vm.hostname = MASTER_NAME
     master.vm.network :private_network, ip:MASTER_IP
-       
+    
     master.vm.provider "virtualbox" do |vb|
       vb.name = MASTER_NAME
     end
-    
-    master.vm.provision "shell", privileged: true, path: "scripts/master_setup.sh", args: [MASTER_IP]
+
+    master.vm.provision "shell", inline: <<-SHELL
+      systemctl disable firewalld --now
+			export INSTALL_K3S_EXEC="--node-ip=#{MASTER_IP} --flannel-iface=eth1 --tls-san #{MASTER_IP} --bind-address=#{MASTER_IP} --advertise-address=#{MASTER_IP} --node-external-ip=#{MASTER_IP} --write-kubeconfig-mode 644"
+      sudo yum install net-tools -y
+      curl -sfL https://get.k3s.io |  sh -
+			NODE_TOKEN="/var/lib/rancher/k3s/server/node-token"
+			cp ${NODE_TOKEN} /vagrant/
+			echo "alias k='kubectl'" >> /etc/profile.d/00-aliases.sh
+		SHELL
   end
  
   config.vm.define WORKER_NAME do |worker|
     worker.vm.hostname = WORKER_NAME
     worker.vm.network :private_network, ip:WORKER_IP
-     
+    
     worker.vm.provider "virtualbox" do |vb|
       vb.name = WORKER_NAME
     end
-    worker.vm.provision "shell", privileged: true, path: "scripts/worker_setup.sh", args:[MASTER_IP, WORKER_IP]
+
+    worker.vm.provision "shell", inline: <<-SHELL
+			export INSTALL_K3S_EXEC="--node-ip=#{WORKER_IP} --flannel-iface=eth1 --node-external-ip=#{WORKER_IP}"
+			export K3S_URL=https://#{MASTER_IP}:6443
+			export K3S_TOKEN_FILE="/vagrant/node-token"
+			curl -sfL https://get.k3s.io |  sh -
+			echo "alias k='kubectl'" >> /etc/profile.d/00-aliases.sh
+      sudo yum install net-tools -y
+		SHELL
   end
 end
