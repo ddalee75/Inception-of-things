@@ -35,8 +35,8 @@ Vagrant.configure("2") do |config|
       curl -sfL https://get.k3s.io |  sh -
 			NODE_TOKEN="/var/lib/rancher/k3s/server/node-token"
 			cp ${NODE_TOKEN} /vagrant/
-			echo "alias k='kubectl'" >> /etc/profile.d/00-aliases.sh
-			sudo yum install net-tools -y
+			echo "alias k='kubectl'" >> /etc/profile.d/00-aliases.shsudo 
+      yum install net-tools -y
 
 		SHELL
   end

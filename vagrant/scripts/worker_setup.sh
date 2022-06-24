@@ -1,7 +1,8 @@
 #!/bin/bash
 
-export TOKEN_FILE = "vagrant/scripts/node-token"
-export INSTALL_K3S_EXEC="agent --server https://$1:6443 --token-file $TOKEN_FILE --node-ip=$2"
+export INSTALL_K3S_EXEC="--node-ip=192.168.42.111 --flannel-iface=eth1 --node-external-ip=192.168.42.111"
+export K3S_URL=https://192.168.42.110:6443
+export K3S_TOKEN_FILE="vagrant/node-token"
 
 
 echo "K3S: Downloading and installing...in Worker node"
