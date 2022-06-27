@@ -11,7 +11,7 @@ spec:                         # les specifications du deployment
       app: app-three
   template: 
     metadata:                 #ici le metadat lie au pod
-      labls:                  # le label du pod  (faut etre pareil avec matchLabels)
+      lables:                  # le label du pod  (faut etre pareil avec matchLabels)
         app: app-three  
     spec:                     #ici les specifications du pod
       containers:             # Un pod peut contenir plusieur conteneurs
