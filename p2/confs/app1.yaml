@@ -1,9 +1,9 @@
 ---
 # Deployment
-apiversion: v1
+apiVersion: apps/v1
 kind: Deployment
-metadta:
-  name: Deployment-app1       # Le metadata lie au deployment
+metadata:
+  name: deployment-app1       # Le metadata lie au deployment
 spec:                         # les specifications du deployment
   replicas: 1                 # lancer un pod
   selector:    
@@ -11,21 +11,21 @@ spec:                         # les specifications du deployment
       app: app-one
   template: 
     metadata:                 #ici le metadat lie au pod
-      lables:                  # le label du pod  (faut etre pareil avec matchLabels)
+      labels:                  # le label du pod  (faut etre pareil avec matchLabels)
         app: app-one  
     spec:                     #ici les specifications du pod
       containers:             # Un pod peut contenir plusieur conteneurs
         - name: app-one 
-          image: nginx:1.14.2 #installer nginx pour lire le fichier index.html
+          image: nginx:stable-alpine #installer nginx pour lire le fichier index.html
           ports:
           - containerPort: 8080 #port du Pod autorise
           volumeMounts:       #monter un volume pointer dans le container
           - name: html-volume
-            mountpath: /usr/share/nginx/html
+            mountPath: /usr/share/nginx/html
       volumes:                #monter un volume pointer vers (host) le chemin app1-html qui sera definir dans le script
       - name: html-volume
         configMap:
-          name:app1-html 
+          name: app1-html 
 
 ---
 # Service (pour connecter le port du pod et cluster )
@@ -38,4 +38,4 @@ spec:
     app: app-one              #appliquer sur le pod Lable=app-one
   ports:
     - port: 80                # expose le service sur ce port dans le cluster, les autres pods du cluster peuvent comminiquer avec ce serveur sur ce port
-    - targetport: 8080        # port du Pod autorise = containerport
+      targetPort: 8080        # port du Pod autorise = containerport
