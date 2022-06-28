@@ -3,8 +3,8 @@ BOX = "generic/centos8"
 BOX_URL = "https://app.vagrantup.com/generic/boxes/centos8/versions/3.6.12/providers/virtualbox.box"
 
 MASTER_NAME = "chileeS"
-dMASTER_IP = "192.168.42.110"
-d
+MASTER_IP = "192.168.42.110"
+
 Vagrant.configure("2") do |config|
   config.vm.box = BOX
   config.vm.box_url = BOX_URL
