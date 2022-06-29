@@ -21,7 +21,7 @@ spec:                         # les specifications du deployment
           ports:
           - containerPort: 8080 #port du Pod autorise
           env:
-          - name: message
+          - name: MESSAGE
             value: "Hello Hello From APP3"
 ---
 # Service (pour connecter le port du pod et cluster )
