@@ -1,0 +1,56 @@
+#!/usr/bin/env ruby
+
+CPU = 1
+MEMORY = 1024
+MASTER_IP = "192.168.42.110"
+WORKER_IP = "192.168.42.111"
+MASTER_NAME = "chileeS"
+WORKER_NAME = "chileeSW"
+PROVIDER = "virtualbox"
+
+
+$master_script = <<-SCRIPT
+#Enable ssh connection
+sudo mkdir -p /root/.ssh
+sudo cp /tmp/id_rsa.pub /root/.ssh/authorized_keys
+
+curl -sfL https://get.k3s.io | K3S_KUBECONFIG_MODE=644 \
+	K3s_NODE_NAME=#{MASTER_NAME} \
+	INSTALL_K3S_NAME=k3s \
+	INSTALL_K3S_EXEC=--flannel-iface=eth1 \
+	sh -       
+    
+    echo "Mount volume VM Master -> container"
+    /usr/local/bin/kubectl create configmap app1-html --from-file /vagrant/confs/app1/index.html
+    /usr/local/bin/kubectl create configmap app2-html --from-file /vagrant/confs/app2/index.html
+    /usr/local/bin/kubectl create configmap app3-html --from-file /vagrant/confs/app3/index.html
+
+    echo "Deploying APP-1, APP-2, APP-3...."
+    /usr/local/bin/kubectl apply -f  /vagrant/confs/app1.yaml
+    /usr/local/bin/kubectl apply -f  /vagrant/confs/app2.yaml
+    /usr/local/bin/kubectl apply -f  /vagrant/confs/app3.yaml
+    /usr/local/bin/kubectl apply -f  /vagrant/confs/ingress.yaml
+
+SCRIPT
+
+
+Vagrant.configure("2") do | config |
+	config.vm.box = "centos/stream8"
+	config.vm.synced_folder ".", "/vagrant"
+	config.vm.provider "virtualbox" do |vb|
+		vb.cpus = CPU
+		vb.memory = MEMORY
+	end
+
+	# Define server machine
+	config.vm.define MASTER_NAME do | master |
+			#BIND 192.168.42.110 on eth1
+		master.vm.network "private_network", ip: MASTER_IP
+		master.vm.hostname = MASTER_NAME
+		master.vm.provider PROVIDER do |vb|
+			vb.name = MASTER_NAME
+		end
+		master.vm.provision "file", source: "~/.ssh/id_rsa.pub", destination: "/tmp/"
+		master.vm.provision "shell", inline: $master_script
+	end
+end

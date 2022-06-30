@@ -16,17 +16,13 @@ spec:                         # les specifications du deployment
     spec:                     #ici les specifications du pod
       containers:             # Un pod peut contenir plusieur conteneurs
         - name: app-three 
-          image: nginx:stable-alpine   #installer nginx pour lire le fichier index.html
+          image: paulbouwer/hello-kubernetes:1.10
+          imagePullPolicy: Always
           ports:
           - containerPort: 8080 #port du Pod autorise
-          volumeMounts:         #monter un volume pointer dans le container
-          - name: html-volume
-            mountPath: /usr/share/nginx/html
-      volumes:                  #monter un volume pointer vers (host) le chemin app1-html qui sera definir dans le script
-      - name: html-volume
-        configMap:
-          name: app3-html 
-
+          env:
+          - name: MESSAGE
+            value: "Coucou by Adrien and Ching From APP3"
 ---
 # Service (pour connecter le port du pod et cluster )
 apiVersion: v1

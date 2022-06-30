@@ -3,39 +3,36 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: deployment-app1       # Le metadata lie au deployment
+  name: deployment-app2       # Le metadata lie au deployment
 spec:                         # les specifications du deployment
-  replicas: 1                 # lancer un pod
+  replicas: 3                 # lancer un pod
   selector:    
     matchLabels:              # indiquer le pod a appliquer
-      app: app-one
+      app: app-two
   template: 
     metadata:                 #ici le metadat lie au pod
       labels:                  # le label du pod  (faut etre pareil avec matchLabels)
-        app: app-one  
+        app: app-two  
     spec:                     #ici les specifications du pod
       containers:             # Un pod peut contenir plusieur conteneurs
-        - name: app-one 
-          image: nginx:stable-alpine #installer nginx pour lire le fichier index.html
+        - name: app-two 
+          image: paulbouwer/hello-kubernetes:1.10
+          imagePullPolicy: Always
           ports:
           - containerPort: 8080 #port du Pod autorise
-          volumeMounts:       #monter un volume pointer dans le container
-          - name: html-volume
-            mountPath: /usr/share/nginx/html
-      volumes:                #monter un volume pointer vers (host) le chemin app1-html qui sera definir dans le script
-      - name: html-volume
-        configMap:
-          name: app1-html 
+          env:
+          - name: MESSAGE
+            value: "Hola by Adrien and Ching From APP2"
 
 ---
 # Service (pour connecter le port du pod et cluster )
 apiVersion: v1
 kind: Service
-metadata:                     # le metadata lie au service
-  name: service-app1 
+metadata:                    # le metadata lie au service
+  name: service-app2 
 spec:
   selector:
-    app: app-one              #appliquer sur le pod Lable=app-one
+    app: app-two              #appliquer sur le pod Lable=app-two
   ports:
     - port: 80                # expose le service sur ce port dans le cluster, les autres pods du cluster peuvent comminiquer avec ce serveur sur ce port
       targetPort: 8080        # port du Pod autorise = containerport

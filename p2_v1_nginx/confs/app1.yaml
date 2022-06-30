@@ -16,13 +16,16 @@ spec:                         # les specifications du deployment
     spec:                     #ici les specifications du pod
       containers:             # Un pod peut contenir plusieur conteneurs
         - name: app-one 
-          image: paulbouwer/hello-kubernetes:1.10
-          imagePullPolicy: Always
+          image: nginx:stable-alpine #installer nginx pour lire le fichier index.html
           ports:
-          - containerPort: 8080 #port du Pod autorise
-          env:
-          - name: MESSAGE
-            value: "Hello Hello From APP1"
+          - containerPort: 80 #port du Pod autorise (image nginx port par defaut =80 pas 8080)
+          volumeMounts:       #monter un volume pointer dans le container
+          - name: html-volume
+            mountPath: /usr/share/nginx/html
+      volumes:                #monter un volume pointer dans VM le chemin app1-html qui sera definir dans le script
+      - name: html-volume
+        configMap:
+          name: app1-html 
 
 ---
 # Service (pour connecter le port du pod et cluster )
@@ -31,8 +34,10 @@ kind: Service
 metadata:                     # le metadata lie au service
   name: service-app1 
 spec:
+  type: NodePort
   selector:
     app: app-one              #appliquer sur le pod Lable=app-one
   ports:
-    - port: 80                # expose le service sur ce port dans le cluster, les autres pods du cluster peuvent comminiquer avec ce serveur sur ce port
-      targetPort: 8080        # port du Pod autorise = containerport
+    - port: 80  
+      protocol: TCP              # expose le service sur ce port dans le cluster, les autres pods du cluster peuvent comminiquer avec ce serveur sur ce port
+      targetPort: 80        # port du Pod autorise = containerport
