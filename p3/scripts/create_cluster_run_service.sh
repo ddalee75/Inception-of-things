@@ -36,7 +36,7 @@ sudo kubectl -n argocd patch secret argocd-secret \
 sleep 3
 
 echo "installing application to argocd"
-sudo kubectl apply -f ../confs/project.yaml -n argocd
+sudo kubectl apply -f ../confs/application.yaml -n argocd
 sleep 3
 
 echo "Done" 
