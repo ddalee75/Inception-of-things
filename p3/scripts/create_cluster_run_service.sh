@@ -40,3 +40,6 @@ sudo kubectl apply -f ../confs/project.yaml -n argocd
 sleep 3
 
 echo "Done" 
+
+
+
