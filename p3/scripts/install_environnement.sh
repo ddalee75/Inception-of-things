@@ -7,7 +7,8 @@ echo "installing curl..."
 #install curl 
 sudo apt update
 sudo apt upgrade
-sudo apt install -y curl
+sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common
+
 
 echo "installing docker..."
 #download docker (https://docs.docker.com/engine/install/ubuntu/#install-using-the-convenience-script)
