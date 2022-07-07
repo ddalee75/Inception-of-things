@@ -28,15 +28,6 @@ sudo kubectl apply -f ../confs/ingress.yaml -n argocd
 sleep 3
 
 
-echo "changing defautl password"
-#bcrypt(password)=$2a$10$rRyBsGSHK6.uc8fntPwVIuLVHgsAhAX7TcdrqW/RADU0uh7CaChLa
-sudo kubectl -n argocd patch secret argocd-secret \
-  -p '{"stringData": {
-    "admin.password": "$2a$10$rRyBsGSHK6.uc8fntPwVIuLVHgsAhAX7TcdrqW/RADU0uh7CaChLa",
-    "admin.passwordMtime": "'$(date +%FT%T%Z)'"
-  }}'
-sleep 3
-
 echo "installing project to argocd"
 sudo kubectl apply -f ../confs/project.yaml -n argocd
 echo "installed project to argocd"
