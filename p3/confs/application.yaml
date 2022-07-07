@@ -5,13 +5,13 @@ metadata:
 spec:
   project: development
   source:
-    repoURL: https://github.com/ddalee75/iot-argocd.git
-    targetRevision: HEAD                      # Branch Tracking
+    repoURL: https://github.com/wen/yewen-argocd.git
+    targetRevision: HEAD
     path: manifests
     directory:
       recurse: true
   destination:
-    server: https://kubernetes.default.svc    #Accessing the Kubernetes API from a Pod 
+    server: https://kubernetes.default.svc
     namespace: dev
   syncPolicy:
     automated:
