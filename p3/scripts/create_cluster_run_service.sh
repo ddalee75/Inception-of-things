@@ -19,16 +19,16 @@ sudo kubectl apply -f ../confs/install.yaml -n argocd
 sleep 3
 
 
-#echo "waiting the pods to be ready"
-#sudo kubectl wait -n argocd --for=condition=Ready pods --all
-#sleep 3
+echo "waiting the pods to be ready"
+sudo kubectl wait -n argocd --for=condition=Ready pods --all
+sleep 3
 
 echo "deploy ingress of argocd..."
 sudo kubectl apply -f ../confs/ingress.yaml -n argocd
 sleep 3
 
 
-echo "changing defautl password to "password""
+echo "changing defautl password""
 #bcrypt(password)=$2a$10$rRyBsGSHK6.uc8fntPwVIuLVHgsAhAX7TcdrqW/RADU0uh7CaChLa
 sudo kubectl -n argocd patch secret argocd-secret \
   -p '{"stringData": {
@@ -38,7 +38,7 @@ sudo kubectl -n argocd patch secret argocd-secret \
 sleep 3
 
 echo "installing project to argocd"
-kubectl apply -f ../confs/project.yaml -n argocd
+sudo kubectl apply -f ../confs/project.yaml -n argocd
 echo "installed project to argocd"
 sleep 3
 
