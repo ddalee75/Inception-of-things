@@ -15,7 +15,7 @@ sudo kubectl create namespace dev
 sleep 3
 
 echo "installing argocd"
-sudo kubectl apply -f -n argocd ../confs/install.yaml
+sudo kubectl apply -n argocd -f ../confs/install.yaml
 sleep 3
 
 
