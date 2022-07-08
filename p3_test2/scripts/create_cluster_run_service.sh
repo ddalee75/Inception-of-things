@@ -26,10 +26,6 @@ echo "deploy ingress of argocd..."
 sudo kubectl apply -f ../confs/ingress.yaml -n argocd
 sleep 3
 
-echo "install traefik rue..."
-sudo kubectl apply -f ../confs/rule.yaml -n argocd
-sleep 3
-
 echo "installing project to argocd"
 sudo kubectl apply -f ../confs/project.yaml -n argocd
 echo "installed project to argocd"
