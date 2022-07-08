@@ -19,9 +19,9 @@ sudo kubectl apply -n argocd -f ../confs/install.yaml
 sleep 3
 
 
-#echo "waiting the pods to be ready"
-#sudo kubectl wait -n argocd --for=condition=Ready pods --all
-#sleep 3
+echo "waiting the pods to be ready"
+sudo kubectl wait -n argocd --for=condition=Ready pods --all
+sleep 3
 
 echo "deploy ingress of argocd..."
 sudo kubectl apply -f ../confs/ingress.yaml -n argocd
