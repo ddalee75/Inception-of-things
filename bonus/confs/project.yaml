@@ -1,0 +1,15 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: developmen-gitlab
+  labels:
+    app: iot-gitlab
+spec:
+  description: GitLab Project to deploy our app locally
+  sourceRepos:
+    - "http://HOST_IP/root/*"
+  destinations:
+    - namespace: gitlap
+      server: https://kubernetes.default.svc
+  orphanedResources:
+    warn: false
