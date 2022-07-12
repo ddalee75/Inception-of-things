@@ -30,7 +30,7 @@ sudo apt install -y gitlab-ce
 sudo sed -i 's|external_url \x27http://gitlab.example.com\x27|external_url \x27http://$IP:9999\x27|g' /etc/gitlab/gitlab.rb 
 sudo gitlab-ctl reconfigure 
 # \x27='
-encho "END - install gitlab"
+echo "END - install gitlab"
 sudo cat /etc/gitlab/initial_root_password
 
 
