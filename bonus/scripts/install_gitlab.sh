@@ -28,7 +28,7 @@ export LC_ALL=en_US.UTF-8
 
 sudo apt install -y gitlab-ce
 sudo sed -i 's|external_url \x27http://gitlab.example.com\x27|external_url \x27http://'"$IP"\x27|g' /etc/gitlab/gitlab.rb 
-gitlab-ctl reconfigure 
+sudo gitlab-ctl reconfigure 
 encho "END - install gitlab"
 
 #sudo dpkg-reconfigure locales
