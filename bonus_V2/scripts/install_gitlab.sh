@@ -6,7 +6,7 @@ echo "START - install gitlab - "$IP
 
 echo "[1]: install gitlab"
 
-echo 'debconf debconf/frontend select Noninteractive' | sudo debconf-set-selections
+echo 'debconf debconf/frontend select Noninteractive' | sudo debconf-set-selections #insert new values into the debconf database
 
 sudo locale-gen --purge en_US.UTF-8
 sudo sh -c 'echo "LANG=en_US.UTF-8\nLANGUAGE=en_US.UTF-8\nLC_ALL=en_US.UTF-8\nLC_CTYPE=en_US.UTF-8" > /etc/default/locale'
@@ -24,7 +24,7 @@ curl -sS https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/scrip
 sudo apt-get update -qq >/dev/null
 
 sudo apt install -y gitlab-ce
-sudo sed -i 's|external_url 'http://gitlab.example.com'|external_url 'http://'"$IP"':9999'|g' /etc/gitlab/gitlab.rb 
+sudo sed -i 's|external_url \x27http://gitlab.example.com\x27|external_url \x27http://'"$IP"'\x27|g' /etc/gitlab/gitlab.rb 
 sudo gitlab-ctl reconfigure 
 
 echo "END - install gitlab"

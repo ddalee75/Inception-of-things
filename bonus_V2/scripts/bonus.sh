@@ -2,7 +2,7 @@
 
 HOST_IP=$(hostname -I | awk '{print $2}')
 
-sudo k3d cluster edit part3 --port-add 8889:30889@loadbalancer
+sudo k3d cluster edit adconsta --port-add 8889:30889@loadbalancer
 
 sudo kubectl create namespace gitlab
 echo "\n----------------Bonus-----------------"

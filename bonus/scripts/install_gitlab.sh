@@ -6,7 +6,7 @@ echo "START - install gitlab - "$IP
 
 echo "[1]: install gitlab"
 
-echo 'debconf debconf/frontend select Noninteractive' | sudo debconf-set-selections
+echo 'debconf debconf/frontend select Noninteractive' | sudo debconf-set-selections #insert new values into the debconf database
 
 sudo locale-gen --purge en_US.UTF-8
 sudo sh -c 'echo "LANG=en_US.UTF-8\nLANGUAGE=en_US.UTF-8\nLC_ALL=en_US.UTF-8\nLC_CTYPE=en_US.UTF-8" > /etc/default/locale'
