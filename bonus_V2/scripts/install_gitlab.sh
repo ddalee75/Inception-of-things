@@ -24,7 +24,7 @@ curl -sS https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/scrip
 sudo apt-get update -qq >/dev/null
 
 sudo apt install -y gitlab-ce
-sudo sed -i 's|external_url http://gitlab.example.com\x27|external_url http://'"$HOST_IP"':9999|g' /etc/gitlab/gitlab.rb 
+sudo sed -i 's|external_url 'http://gitlab.example.com'|external_url 'http://'"$IP"':9999'|g' /etc/gitlab/gitlab.rb 
 sudo gitlab-ctl reconfigure 
 
 echo "END - install gitlab"
