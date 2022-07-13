@@ -1,6 +1,6 @@
 #!/bin/bash
 
-HOST_IP=$(hostname -I | awk '{print $2}')
+#HOST_IP=$(hostname -I | awk '{print $2}')
 
 sudo k3d cluster edit part3 --port-add 8889:30889@loadbalancer
 
