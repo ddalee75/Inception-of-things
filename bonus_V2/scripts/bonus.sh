@@ -8,7 +8,7 @@ sudo kubectl create namespace gitlab
 echo "\n----------------Bonus-----------------"
 echo "\ninstalling project Bonus to argocd..."
 
-if grep -q HOST_IP ../confs/project.yamll then
+if grep -q HOST_IP ../confs/project.yaml; then
     sed -i 's/HOST_IP/'"$HOST_IP"'/g' ../confs/project.yaml
 fi
 
@@ -17,7 +17,7 @@ echo "\ninsatlled progect to argocd"
 sleep 3
 
 echo "\ninstalling application Bonus to argocd..."
-if grep -q HOST_IP ../confs/application.yamll then
+if grep -q HOST_IP ../confs/application.yaml; then
     sed -i 's/HOST_IP/'"$HOST_IP"'/g' ../confs/application.yaml
 fi
 
