@@ -1,0 +1,38 @@
+---
+# Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-app2       # Le metadata lie au deployment
+spec:                         # les specifications du deployment
+  replicas: 3                 # lancer un pod
+  selector:    
+    matchLabels:              # indiquer le pod a appliquer
+      app: app-two
+  template: 
+    metadata:                 #ici le metadat lie au pod
+      labels:                  # le label du pod  (faut etre pareil avec matchLabels)
+        app: app-two  
+    spec:                     #ici les specifications du pod
+      containers:             # Un pod peut contenir plusieur conteneurs
+        - name: app-two 
+          image: paulbouwer/hello-kubernetes:1.10
+          imagePullPolicy: Always
+          ports:
+          - containerPort: 8080 #port du Pod autorise
+          env:
+          - name: MESSAGE
+            value: "Hola by Adrien and Ching From APP2"
+
+---
+# Service (pour connecter le port du pod et cluster )
+apiVersion: v1
+kind: Service
+metadata:                    # le metadata lie au service
+  name: service-app2 
+spec:
+  selector:
+    app: app-two              #appliquer sur le pod Lable=app-two
+  ports:
+    - port: 80                # expose le service sur ce port dans le cluster, les autres pods du cluster peuvent comminiquer avec ce serveur sur ce port
+      targetPort: 8080        # port du Pod autorise = containerport
