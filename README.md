@@ -1,3 +1,6 @@
+
+![Screenshot from 2022-07-18 17-14-20](https://user-images.githubusercontent.com/92326016/179544010-5435e51d-5575-44fc-ae6e-ab6889424c5e.png)
+
 # Inception-of-things
 
 bonus : version ok avec l adresse ip en dur
