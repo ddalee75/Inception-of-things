@@ -12,7 +12,8 @@ p3_ok : version p3 ok
 
 veresionOk_Push : la derniere version du projet IOT valide et Push sur vosphere
 
-pour partie 3:
-note 1: si l execution du script "clean.sh" 
+Pour partie 3:
+note : si l execution du script "clean.sh" 
 => apres l'insallation des environnement il faut relancer docker = "systemctl start docker"  
 => faut re-installer vagrant pour la partie bonus. 
+
