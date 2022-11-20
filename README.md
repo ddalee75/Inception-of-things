@@ -40,3 +40,30 @@ bonus_v2 : version ok l'adresse ip en variable
 - In the second one (ServerWorker), in agent mode.
 
 • Install kubectl
+
+
+
+<b>Part 2 : K3s and three simple applications</b>
+
+• Install K3D on your virtual machine. <br>
+• Write a script to install every necessary packages and tools. <br>
+• Set up a small infrastructure (CD CI) following the logic illustrated by the diagram below:
+[image src="https://www.chinglinlee.com/wp-content/uploads/2022/11/IOTPART3.png" width="400px" ]<br><br>
+• Have to create two namespaces:<br>
+  - The first one will be dedicated to Argo CD.<br>
+  - The second one will be named dev and will contain an application. This application will be automatically deployed by Argo CD using your online Github repository.<br>
+• The application that will be deployed must have two different versions<br>
+• Must be able to change the version from your public Github repository, then check that the application has been correctly updated.<br><br>
+
+
+
+<b>Bonus Part : K3d and Argo CD , Git Lab</b>
+• Add Gitlab in the lab you did in Part 3.<br>
+• Your Gitlab instance must run locally.<br>
+• Configure Gitlab to make it work with your cluster.<br>
+• Create a dedicated namespace named gitlab.<br>
+• Everything you did in Part 3 must work with your local Gitlab.<br>
+
+<br><br>[button title="Code on GitHub" link="https://github.com/ddalee75/Inception-of-things" target="_blank" align="" icon="" icon_position="" color="#00baff" font_color="#ffffff" size="2" full_width="" class="" download="" rel="" onclick=""]
+
+
