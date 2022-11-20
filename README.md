@@ -78,8 +78,9 @@ bonus_v2 : version ok l'adresse ip en variable
 • Your Gitlab instance must run locally.<br>
 • Configure Gitlab to make it work with your cluster.<br>
 • Create a dedicated namespace named gitlab.<br>
-• Everything you did in Part 3 must work with your local Gitlab.<br>
+• Everything you did in Part 3 must work with your local Gitlab.<br><br>
 
 
+![IOTBonus](https://user-images.githubusercontent.com/92326016/202915701-6219d910-4cda-4a15-8167-4f9b3053a6f5.jpg)<br>
 
 
