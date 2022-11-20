@@ -73,13 +73,13 @@ bonus_v2 : version ok l'adresse ip en variable
 
 
 
-<b>Bonus Part : K3d and Argo CD , Git Lab</b>
+<b>Bonus Part : K3d and Argo CD , Git Lab</b><br>
 • Add Gitlab in the lab you did in Part 3.<br>
 • Your Gitlab instance must run locally.<br>
 • Configure Gitlab to make it work with your cluster.<br>
 • Create a dedicated namespace named gitlab.<br>
 • Everything you did in Part 3 must work with your local Gitlab.<br>
 
-<br><br>[button title="Code on GitHub" link="https://github.com/ddalee75/Inception-of-things" target="_blank" align="" icon="" icon_position="" color="#00baff" font_color="#ffffff" size="2" full_width="" class="" download="" rel="" onclick=""]
+
 
 
