@@ -44,7 +44,19 @@ bonus_v2 : version ok l'adresse ip en variable
 
 
 <b>Part 2 : K3s and three simple applications</b>
+![IOTPart2](https://user-images.githubusercontent.com/92326016/202915428-8e1e5efd-3d23-4011-9b1d-95342d33ee1c.png)
 
+
+<br><br>
+• Set up 3 web applications of your choice that will run in your K3s instance. <br>
+• Be able to access them depending on the HOST used when making a request to the IP address 192.168.42.110.<br>
+• When a client inputs the ip 192.168.42.110 in his web browser with the HOST app1.com, the server must display the app1. When the HOST app2.com is used, the server must dis- play the app2. Otherwise, the app3 will be selected by default.<br><br>
+• Result when the virtual machine is correctly configured:<br><br>
+
+
+<br><br>
+
+<h5>Part 3 : K3d and Argo CD , Git Hub</h5>
 • Install K3D on your virtual machine. <br>
 • Write a script to install every necessary packages and tools. <br>
 • Set up a small infrastructure (CD CI) following the logic illustrated by the diagram below:
