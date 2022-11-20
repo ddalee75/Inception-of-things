@@ -57,7 +57,7 @@ bonus_v2 : version ok l'adresse ip en variable
 
 <br><br>
 
-<h5>Part 3 : K3d and Argo CD , Git Hub</h5> <br>
+<b>Part 3 : K3d and Argo CD , Git Hub</b> <br>
 • Install K3D on your virtual machine. <br>
 • Write a script to install every necessary packages and tools. <br>
 • Set up a small infrastructure (CD CI) following the logic illustrated by the diagram below:
