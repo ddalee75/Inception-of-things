@@ -28,10 +28,15 @@ Part 1 : K3s and Vagrant
 
 • Set up 2 machines with Vagrantfile.
 • The hostname of the first machine must be followed by the capital letter S (like Server). The hostname of the second machine must be followed by SW (like ServerWorker).
+
 • Have a dedicated IP on the eth1 interface. The IP of the first machine (Server) will be 192.168.42.110, and the IP of the second machine (ServerWorker) will be 192.168.42.111
+
 • Be able to connect with SSH on both machines with no password.
+
 • Be able to connect with SSH on both machines with no password.
+
 • Install K3s on both machines:
 - In the first one (Server), it will be installed in controller mode.
 - In the second one (ServerWorker), in agent mode.
+
 • Install kubectl
